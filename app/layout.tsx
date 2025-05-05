@@ -1,3 +1,6 @@
+import { StrictMode } from 'react';
+import { Navbar } from '../components/navbar';
+
 import 'bootstrap/dist/css/bootstrap.css'
 
 export default function RootLayout({
@@ -6,8 +9,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <StrictMode>
+    <Navbar />
+      <html lang="en">
+        <body>
+	  <div className="container text-center">
+	    {children}
+	  </div>
+	</body>
+      </html>
+    </StrictMode>
   )
 }

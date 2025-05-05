@@ -1,6 +1,7 @@
-export default function Home() {
+export default function Page() {
+  console.log("rendering");
   return(
-    <div className="container text-center">
+    <div>
       <div className="row">
         <h1>Emma's website</h1>
       </div>
