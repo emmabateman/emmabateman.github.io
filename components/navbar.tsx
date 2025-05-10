@@ -3,6 +3,7 @@ function Navbar() {
     <div className="navbar-expand">
       <div className="navbar">
         <a className="nav-item" href="/">Home</a>
+	<a className="nav-item" href="/mathdoku">Mathdoku</a>
       </div>
     </div>
   );
