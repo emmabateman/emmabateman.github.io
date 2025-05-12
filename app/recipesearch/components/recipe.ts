@@ -21,7 +21,7 @@ function jsonToRecipe(data: JSON) : Recipe {
     region: data["strArea"],
     ingredients: [],
     instructions: data["strInstructions"],
-    thumbnail: data["strMealThumb"]
+    thumbnailUrl: data["strMealThumb"]
   }
 
   for (let i = 1; data[`strIngredient${i}`]; i++) {
@@ -34,4 +34,5 @@ function jsonToRecipe(data: JSON) : Recipe {
   return recipe;
 }
 
-export { Recipe, jsonToRecipe }
+export type { Recipe, Ingredient }
+export { jsonToRecipe }

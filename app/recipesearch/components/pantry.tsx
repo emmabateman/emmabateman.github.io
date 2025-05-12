@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 function SearchBar({ isInMyIngredients, handleAddIngredient }:
-		   { isInMyIngredients: (ingredient: JSON) => bool,
+		   { isInMyIngredients: (ingredient: JSON) => boolean,
 		   handleAddIngredient: (ingredient: JSON) => void }) {
   const [ingredientData, setIngredientData] = useState<JSON[]>([]);
   const [searchText, setSearchText] = useState<string>("");
@@ -87,7 +87,7 @@ function Pantry({ myIngredients, setMyIngredients }:
     setMyIngredients([...newIngredients]);
   }
 
-  function isInMyIngredients(ingredient: JSON) : bool {
+  function isInMyIngredients(ingredient: JSON) : boolean {
     return myIngredients.includes(ingredient);
   }
 

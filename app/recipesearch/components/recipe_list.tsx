@@ -49,7 +49,7 @@ function RecipeList({ myIngredients, addToShoppingList }:
         </li>
         {[...new Array(Math.ceil(recipes.length / resultsPerPage)).keys()].map((page) =>
           <li className={`page-item ${pageNumber == page ? "active": ""}`} key={page}>
- 	    <a className="page-link" href="#" aria-label={page+1} 
+ 	    <a className="page-link" href="#" aria-label={(page+1).toString()} 
 	       onClick={() => setPageNumber(page)}>
 	       {page+1}
 	    </a>
