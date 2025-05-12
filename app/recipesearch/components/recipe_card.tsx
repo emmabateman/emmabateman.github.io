@@ -3,7 +3,7 @@ import { Recipe, Ingredient } from './recipe'
 function RecipeCard({ recipe, myIngredients, addToShoppingList }:
 		    { recipe: Recipe, myIngredients: JSON[],
 			    addToShoppingList: (items: string[]) => void }) {
-  function numMatchingIngredients() : bool{
+  function numMatchingIngredients() : number {
     return myIngredients.filter((x) =>
 				recipe.ingredients.map((i) => i.name.toLowerCase())
 				.includes(x["strIngredient"].toLowerCase()))
@@ -22,7 +22,7 @@ function RecipeCard({ recipe, myIngredients, addToShoppingList }:
       <div className="row">
         <div className="col-md-4">
 	  <div className="container d-flex h-100 w-100 align-items-center">
-            <img className="img-fluid" src={ recipe.thumbnail }/>
+            <img className="img-fluid" src={ recipe.thumbnailUrl }/>
 	  </div>
         </div>
         <div className="col-md-8">
