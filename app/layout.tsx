@@ -12,9 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <StrictMode>
-    <Navbar />
       <html lang="en">
         <body>
+          <Navbar />
 	  <div className="container text-center">
 	    {children}
 	  </div>
