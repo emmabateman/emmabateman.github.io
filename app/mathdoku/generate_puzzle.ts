@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface Clue {
   indices: [number, number][];
-  operation?: '+|-|/|*';
+  operation?: "+|-|/|*";
   value: number;
 }
 
@@ -17,38 +17,47 @@ interface SolutionState {
 }
 
 function setSolutionValue(
-	possibleValues: number[][][],
-	finalValues: number[][],
-	x: number,
-	y: number,
-	value: number) {
+  possibleValues: number[][][],
+  finalValues: number[][],
+  x: number,
+  y: number,
+  value: number
+) {
   //do not overwrite
   if (finalValues[x][y] != null) {
     return;
   }
-		
+
   finalValues[x][y] = value;
 
-  //remove from possibilities in same row/column 
+  //remove from possibilities in same row/column
   for (let i = 0; i < possibleValues.length; i++) {
-    for (let j = 0; j < possibleValues.length; j++) {	    
-      if (i == x || j == y) { //same row and/or column
+    for (let j = 0; j < possibleValues.length; j++) {
+      if (i == x || j == y) {
+        //same row and/or column
         if (finalValues[i][j] == null && possibleValues[i][j].includes(value)) {
-          possibleValues[i][j] = possibleValues[i][j].filter(n => n != value);
+          possibleValues[i][j] = possibleValues[i][j].filter((n) => n != value);
           if (possibleValues[i][j].length == 1) {
-	    setSolutionValue(possibleValues, finalValues, i, j, possibleValues[i][j][0]);
-	  }
-	}
+            setSolutionValue(
+              possibleValues,
+              finalValues,
+              i,
+              j,
+              possibleValues[i][j][0]
+            );
+          }
+        }
       }
     }
   }
 }
 
-function generateSolution(size: number) {
-  let possibleValues =
-    new Array(size).fill(null).map(() => new Array(size).fill(
-      [...Array(size).keys()].map(x => x + 1) //numbers 1 through size
-    ));
+function generateSolution(size: number): number[][] {
+  let possibleValues = new Array(size).fill(null).map(() =>
+    new Array(size).fill(
+      [...Array(size).keys()].map((x) => x + 1) //numbers 1 through size
+    )
+  );
 
   let finalValues = new Array(size).fill(null).map(() => new Array(size));
 
@@ -57,17 +66,31 @@ function generateSolution(size: number) {
       let values = possibleValues[i][j];
       if (values.length > 1) {
         //set to random value
-	let randomValue = possibleValues[i][j][Math.floor(Math.random() * values.length)];
-	setSolutionValue(possibleValues, finalValues, i, j, randomValue);
+        let randomValue =
+          possibleValues[i][j][Math.floor(Math.random() * values.length)];
+        setSolutionValue(possibleValues, finalValues, i, j, randomValue);
       }
     }
   }
   return finalValues;
 }
 
-function generatePuzzle(size: number) : Puzzle {
-  let puzzle : Puzzle = { solution: generateSolution(size), clues: []};
+function generateClues(size: number, solution: number[][]): Clue[] {
+  // start with single-box clues
+  let clues: Clue[] = [];
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      clues.push({ indices: [[i, j]], value: solution[i][j] });
+    }
+  }
+  return clues;
+}
+
+function generatePuzzle(size: number): Puzzle {
+  let puzzle: Puzzle = { solution: generateSolution(size), clues: [] };
+  puzzle.clues = generateClues(size, puzzle.solution);
   return puzzle;
 }
 
-export { Puzzle, generatePuzzle };
+export { generatePuzzle };
+export type { Puzzle };
