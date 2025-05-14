@@ -21,12 +21,14 @@ export default function Page() {
 
   const [activeSquareId, setActiveSquareId] = useState<string>("");
 
-  let puzzle : Puzzle;
+  const [puzzle, setPuzzle] = useState<Puzzle>();
 
   //generate puzzle on mount
   useEffect(() => {
-    puzzle = generatePuzzle(config.size);
+    setPuzzle(generatePuzzle(config.size));
   }, []);
+
+  console.log(puzzle);
 
   function numberPress(n: number) {
     if (activeSquareId) {
@@ -45,7 +47,8 @@ export default function Page() {
         }}>
       <h1>Mathdoku</h1>
       <h3 className="mb-4">My take on a KenKen clone</h3>
-      <Grid config={config} possibleValues={possibleValues} finalValues={finalValues}
+      <Grid config={config} possibleValues={possibleValues}
+            finalValues={finalValues} clues={puzzle ? puzzle.clues : []}
 	    activeSquareId={activeSquareId} setActiveSquareId={setActiveSquareId}/>
       <Controls config={config}/>
     </div>
