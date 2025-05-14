@@ -65,7 +65,9 @@ function generateSolution(size: number) {
   return finalValues;
 }
 
-export function generatePuzzle(size: number) : Puzzle {
+function generatePuzzle(size: number) : Puzzle {
   let puzzle : Puzzle = { solution: generateSolution(size), clues: []};
   return puzzle;
 }
+
+export { Puzzle, generatePuzzle };
