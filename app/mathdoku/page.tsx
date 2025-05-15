@@ -34,14 +34,19 @@ export default function Page() {
     if (activeSquareId) {
       let [x, y] = activeSquareId.split(",").map((x) => parseInt(x));
       let newFinalValues = finalValues.slice();
-      newFinalValues[x][y] = n;
+      if (n >= 1 && n <= config.size) {
+        newFinalValues[x][y] = n;
+      }
+      if (n == 0) { //clear square
+        newFinalValues[x][y] = null;
+      }
       setFinalValues(newFinalValues);
     }
   }
 
   return (
     <div tabIndex="0" onKeyDown={(e) => {
-	    if (e.key.match(/[0-9]/g)) {
+	    if (e.key.match(/[1-9]/g)) {
 		    numberPress(e.key)
 	    }
         }}>
@@ -50,7 +55,7 @@ export default function Page() {
       <Grid config={config} possibleValues={possibleValues}
             finalValues={finalValues} clues={puzzle ? puzzle.clues : []}
 	    activeSquareId={activeSquareId} setActiveSquareId={setActiveSquareId}/>
-      <Controls config={config}/>
+      <Controls config={config} numberPress={numberPress}/>
     </div>
   );
 }
