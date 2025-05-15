@@ -20,6 +20,7 @@ function Navbar() {
 	  <ul className="navbar-nav">
             <NavItem link="/" title="home"/>
 	    <NavItem link="/recipesearch" title="recipe search"/>
+      <NavItem link="/mathdoku" title="mathdoku"/>
 	  </ul>
 	</div>
       </div>
