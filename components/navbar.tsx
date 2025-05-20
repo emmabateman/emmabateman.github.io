@@ -27,6 +27,7 @@ function Navbar() {
           <ul className="navbar-nav">
             <NavItem link="/" title="home" />
             <NavItem link="/recipesearch" title="recipe search" />
+            <NavItem link="/flashcards" title="flashcard study" />
           </ul>
         </div>
       </div>
