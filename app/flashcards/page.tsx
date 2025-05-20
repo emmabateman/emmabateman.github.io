@@ -1,14 +1,21 @@
-import { Deck, Card } from "./components/deck";
+"use client";
 
-const cards: Card[] = [
-  { front: "Hello", back: "World" },
-  { front: "Foo", back: "Bar" },
-];
+import { useState } from "react";
+
+import { Deck, Card } from "./components/deck";
+import { DeckList } from "./components/decklist";
 
 export default function Page() {
+  const [activeDeck, setActiveDeck] = useState<Card[]>([]);
+
   return (
-    <div>
-      <Deck cards={cards} />
+    <div className="row">
+      <div className="col-md-2">
+        <DeckList setActiveDeck={setActiveDeck} />
+      </div>
+      <div className="col-md-8">
+        <Deck cards={activeDeck} />
+      </div>
     </div>
   );
 }
