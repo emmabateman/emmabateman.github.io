@@ -23,6 +23,8 @@ export default function Page() {
       .map(() => new Array(config.size).fill(null))
   );
 
+  const [history, setHistory] = useState<[number[][][], number[][]][]>([]);
+
   const [activeSquareId, setActiveSquareId] = useState<string>("");
   const [inputMode, setInputMode] = useState<"final" | "possible">("final"); //TODO: replace with enum
 
@@ -33,9 +35,8 @@ export default function Page() {
     setPuzzle(generatePuzzle(config.size));
   }, []);
 
-  console.log(puzzle);
-
   function numberPress(n: number) {
+    saveToHistory();
     if (activeSquareId) {
       let [x, y] = activeSquareId.split(",").map((x) => parseInt(x));
 
@@ -78,6 +79,24 @@ export default function Page() {
     }
   }
 
+  function saveToHistory() {
+    let possibleValuesCopy = possibleValues.map((x) => x.map((y) => y.map((z) => z)));
+    let finalValuesCopy = finalValues.map((x) => x.map((y)=> y));
+    let newHistory = history.slice();
+    newHistory.push([possibleValuesCopy, finalValuesCopy])
+    setHistory(newHistory);
+  }
+
+  function undo() {
+    if (history.length) {
+      let newHistory = history.slice();
+      let [newPossibleValues, newFinalValues] = newHistory.pop();
+      setHistory(newHistory);
+      setPossibleValues(newPossibleValues);
+      setFinalValues(newFinalValues);
+    }
+  }
+
   return (
     <div
       tabIndex={0}
@@ -104,6 +123,7 @@ export default function Page() {
         numberPress={numberPress}
         inputMode={inputMode}
         toggleInputMode={toggleInputMode}
+        undo={undo}
       />
     </div>
   );

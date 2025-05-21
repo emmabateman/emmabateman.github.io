@@ -8,11 +8,13 @@ function Controls({
   numberPress,
   inputMode,
   toggleInputMode,
+  undo,
 }: {
   config: Config;
   numberPress: (n: number) => void;
   inputMode: "final" | "possible";
   toggleInputMode: () => void;
+  undo: () => void;
 }) {
   return (
     <div className="mt-4 flex-row">
@@ -50,6 +52,14 @@ function Controls({
         aria-label="Clear"
       >
         <i className="bi bi-x-circle" />
+      </button>
+      <button
+        className={`btn btn-lg m-1 btn-secondary`}
+        onClick={undo}
+        title="Undo"
+        aria-label="Undo"
+      >
+        <i className="bi bi-arrow-counterclockwise" />
       </button>
     </div>
   );
