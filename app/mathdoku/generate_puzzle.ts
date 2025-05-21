@@ -182,4 +182,4 @@ function generatePuzzle(size: number): Puzzle {
 }
 
 export { generatePuzzle };
-export type { Puzzle };
+export type { Clue, Puzzle };

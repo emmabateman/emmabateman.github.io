@@ -7,13 +7,31 @@
   border-color: red;
 }
 
+.possibleValuesGrid {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.possibleValuesRow {
+  width: 70%;
+  aspect-ratio: 1/1;
+}
+
+.possibleValue {
+  width: 33%;
+  height: 10px;
+  font-size: 10px;
+  color: gray;
+}
+
 .grid {
   margin: auto;
   padding: 0;
-  width: 800px;
-  height: 800px;
-  aspect-ratio: 1/1;
-  border-style:solid;
+  width: 900px;
+  height: 900px;
+  border-style: solid;
   display: flex;
   flex-direction: row;
   container-type: size;
@@ -28,12 +46,16 @@
 }
 
 .highlight.active {
+  border-color: #ffff55;
+}
+
+.highlight.active.guessMode {
   border-color: lightskyblue;
 }
 
 @media (max-width: 1000px) or (max-height: 1000px) {
   .grid {
-    width: 80vmin;
-    height: 80vmin;
+    width: 90vmin;
+    height: 90vmin;
   }
 }
