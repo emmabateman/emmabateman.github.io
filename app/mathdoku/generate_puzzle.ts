@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const numClues = 27;
-const maxClueSize = 5;
+const numClues = 35;
+const maxClueSize = 4;
 
 interface Clue {
   indices: [number, number][];

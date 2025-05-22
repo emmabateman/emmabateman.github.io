@@ -1,7 +1,4 @@
-interface Config {
-  size: number;
-  autoSolve: boolean;
-}
+import {Config} from "./config"
 
 function Controls({
   config,
@@ -66,5 +63,3 @@ function Controls({
 }
 
 export { Controls };
-
-export type { Config };

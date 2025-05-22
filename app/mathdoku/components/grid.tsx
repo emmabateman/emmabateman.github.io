@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "../styles.module.css";
 
 import { Square } from "./square";
-import { Config } from "./controls";
+import { Config } from "./config";
 import { Clue } from "../generate_puzzle";
 
 function Grid({
