@@ -71,6 +71,33 @@ function Grid({
     ];
   }
 
+  function getClueIndicesForSquare(x: number, y:number) : [number, number][] {
+    let matchingClue = clues.find((c) =>
+      c.indices.find(([i, j]) => (x == i && j == y))
+    );
+    if (matchingClue) {
+      return matchingClue.indices
+    }
+    return [];
+  }
+
+  function getBorderStyles(x: number, y: number) : string[] {
+    let indices = getClueIndicesForSquare(x ,y);
+
+    //top border
+    let topNeighborIsInClue = indices.find(([i, j]) => (i == x && j == y - 1));
+    let rightNeighborIsInClue = indices.find(([i, j]) => (i == x + 1 && j == y));
+    let bottomNeighborIsInClue = indices.find(([i, j]) => (i == x && j == y + 1));
+    let leftNeighborIsInClue = indices.find(([i, j]) => (i == x - 1 && j == y));
+
+    return [
+      topNeighborIsInClue ? "lightgrey" : "black",
+      rightNeighborIsInClue ? "lightgrey" : "black",
+      bottomNeighborIsInClue ? "lightgrey" : "black",
+      leftNeighborIsInClue ? "lightgrey" : "black"
+    ];
+  }
+
   return (
     <div className={styles.grid}>
       {finalValues.map((row: number[], i: number) => (
