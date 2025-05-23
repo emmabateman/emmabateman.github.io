@@ -1,26 +1,29 @@
-import { StrictMode } from 'react';
-import { Navbar } from '../components/navbar';
-import { BootstrapClient } from '../components/bootstrap_client';
+'use client';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import { StrictMode } from "react";
+import { CookiesProvider } from "react-cookie";
+import { Navbar } from "../components/navbar";
+import { BootstrapClient } from "../components/bootstrap_client";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <StrictMode>
-    <Navbar />
-      <html lang="en">
-        <body>
-	  <div className="container text-center">
-	    {children}
-	  </div>
-	  <BootstrapClient />
-	</body>
-      </html>
+      <CookiesProvider>
+        <Navbar />
+        <html lang="en">
+          <body>
+            <div className="container text-center">{children}</div>
+            <BootstrapClient />
+          </body>
+        </html>
+      </CookiesProvider>
     </StrictMode>
-  )
+  );
 }
