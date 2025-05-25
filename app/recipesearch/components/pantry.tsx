@@ -60,6 +60,8 @@ function SearchBar({
           <div key={ingredient["idIngredient"]} className="dropdown-item-text">
             <button
               className="btn btn-sm text-primary"
+              title="Add"
+              aria-label="Add"
               onClick={() => onAddIngredientClicked(ingredient)}
             >
               <i className="bi bi-plus-lg" />
@@ -86,6 +88,8 @@ function IngredientList({
           {ingredient["strIngredient"]}
           <button
             className="btn btn-sm float-end text-danger"
+            title="Remove"
+            aria-label="Remove"
             onClick={() => handleRemoveIngredient(ingredient)}
           >
             <i className="bi bi-x-lg" />

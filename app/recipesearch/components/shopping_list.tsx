@@ -13,16 +13,20 @@ function ShoppingList({
       <ul className="list-group">
         {items.map((item) => (
           <li key={item} className="list-group-item">
-            {item}{" "}
+            {item}
             <button
               className="btn btn-sm float-end text-danger"
               onClick={() => handleRemoveItem(item)}
+              title="Remove"
+              aria-label="Remove"
             >
               <i className="bi bi-x-lg" />
-            </button>{" "}
+            </button>
             <button
               className="btn btn-sm float-end text-success"
               onClick={() => handlePurchaseItem(item)}
+              title="Purchased"
+              aria-label="Purchased"
             >
               <i className="bi bi-check-lg" />
             </button>
