@@ -59,10 +59,10 @@ function SearchBar({
         {searchResult.slice(0, 10).map((ingredient) => (
           <div key={ingredient["idIngredient"]} className="dropdown-item-text">
             <button
-              className="btn"
+              className="btn btn-sm text-primary"
               onClick={() => onAddIngredientClicked(ingredient)}
             >
-              <i className="bi bi-plus" />
+              <i className="bi bi-plus-lg" />
             </button>
             {ingredient["strIngredient"]}
           </div>
@@ -72,12 +72,24 @@ function SearchBar({
   );
 }
 
-function IngredientList({ ingredients }: { ingredients: JSON[] }) {
+function IngredientList({
+  ingredients,
+  handleRemoveIngredient,
+}: {
+  ingredients: JSON[];
+  handleRemoveIngredient: (ingredient: JSON) => void;
+}) {
   return (
     <ul className="list-group mt-4">
       {ingredients.map((ingredient) => (
         <li key={ingredient["idIngredient"]} className="list-group-item">
           {ingredient["strIngredient"]}
+          <button
+            className="btn btn-sm float-end text-danger"
+            onClick={() => handleRemoveIngredient(ingredient)}
+          >
+            <i className="bi bi-x-lg" />
+          </button>
         </li>
       ))}
     </ul>
@@ -87,16 +99,20 @@ function IngredientList({ ingredients }: { ingredients: JSON[] }) {
 function Pantry({
   myIngredients,
   setMyIngredients,
+  addIngredient,
+  ingredientData,
+  setIngredientData,
   cookies,
   setCookie,
 }: {
   myIngredients: JSON[];
   setMyIngredients: (ingredients: JSON[]) => void;
+  addIngredient: (ingredient: JSON) => void;
+  ingredientData: JSON[];
+  setIngredientData: (data: JSON[]) => void;
   cookies: object;
   setCookie: (name: string, value: any) => void;
 }) {
-  const [ingredientData, setIngredientData] = useState<JSON[]>([]);
-
   const ingredientUrl =
     "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
 
@@ -121,9 +137,9 @@ function Pantry({
     loadIngredientData();
   }, []);
 
-  function addIngredient(ingredient: JSON): void {
+  function removeIngredient(ingredient: JSON) {
     let newIngredients = new Set(myIngredients);
-    newIngredients.add(ingredient);
+    newIngredients.delete(ingredient);
     setMyIngredients([...newIngredients]);
     setCookie(
       "my-ingredients",
@@ -143,7 +159,10 @@ function Pantry({
         isInMyIngredients={isInMyIngredients}
         handleAddIngredient={addIngredient}
       />
-      <IngredientList ingredients={myIngredients} />
+      <IngredientList
+        ingredients={myIngredients}
+        handleRemoveIngredient={removeIngredient}
+      />
     </div>
   );
 }

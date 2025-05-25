@@ -17,6 +17,7 @@ export default function Page() {
 
   const [myIngredients, setMyIngredients] = useState<JSON[]>([]);
   const [shoppingItems, setShoppingItems] = useState<string[]>([]);
+  const [ingredientData, setIngredientData] = useState<JSON[]>([]);
 
   useEffect(() => {
     setShoppingItems(cookies["shopping-list"] || []);
@@ -31,16 +32,47 @@ export default function Page() {
     setCookie("shopping-list", [...newShoppingItems]);
   }
 
+  function removeFromShoppingList(item: string) {
+    let newShoppingItems = new Set(shoppingItems);
+    newShoppingItems.delete(item);
+    setShoppingItems([...newShoppingItems]);
+    setCookie("shopping-list", [...newShoppingItems]);
+  }
+
+  function addIngredient(ingredient: JSON): void {
+    let newIngredients = new Set(myIngredients);
+    newIngredients.add(ingredient);
+    setMyIngredients([...newIngredients]);
+    setCookie(
+      "my-ingredients",
+      [...newIngredients].map((ingredient) => ingredient["idIngredient"])
+    );
+  }
+
   return (
     <div className={styles.page}>
       <div className="col text-start">
         <Pantry
           myIngredients={myIngredients}
           setMyIngredients={setMyIngredients}
+          addIngredient={addIngredient}
+          ingredientData={ingredientData}
+          setIngredientData={setIngredientData}
           cookies={cookies}
           setCookie={setCookie}
         />
-        <ShoppingList items={shoppingItems} />
+        <ShoppingList
+          items={shoppingItems}
+          handleRemoveItem={removeFromShoppingList}
+          handlePurchaseItem={(item: string) => {
+            removeFromShoppingList(item);
+            addIngredient(
+              ingredientData.find(
+                (x) => x["strIngredient"].toLowerCase() == item.toLowerCase()
+              )
+            );
+          }}
+        />
       </div>
       <div className="col">
         <RecipeList
