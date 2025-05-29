@@ -1,4 +1,4 @@
-import { useState } from "react";
+"use client";
 
 const numClues = 35;
 const maxClueSize = 4;
@@ -13,11 +13,6 @@ interface Clue {
 interface Puzzle {
   solution: number[][];
   clues: Clue[];
-}
-
-interface SolutionState {
-  finalValues: number[][];
-  possibleValues: number[][][];
 }
 
 function setSolutionValue(
@@ -57,20 +52,20 @@ function setSolutionValue(
 }
 
 function generateSolution(size: number): number[][] {
-  let possibleValues = new Array(size).fill(null).map(() =>
+  const possibleValues = new Array(size).fill(null).map(() =>
     new Array(size).fill(
       [...Array(size).keys()].map((x) => x + 1) //numbers 1 through size
     )
   );
 
-  let finalValues = new Array(size).fill(null).map(() => new Array(size));
+  const finalValues = new Array(size).fill(null).map(() => new Array(size));
 
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
-      let values = possibleValues[i][j];
+      const values = possibleValues[i][j];
       if (values.length > 1) {
         //set to random value
-        let randomValue =
+        const randomValue =
           possibleValues[i][j][Math.floor(Math.random() * values.length)];
         setSolutionValue(possibleValues, finalValues, i, j, randomValue);
       }
@@ -81,7 +76,7 @@ function generateSolution(size: number): number[][] {
 
 function generateClues(size: number, solution: number[][]): Clue[] {
   // start with single-box clues
-  let clues: Clue[] = [];
+  const clues: Clue[] = [];
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
       clues.push({ indices: [[i, j]], value: solution[i][j] });
@@ -90,8 +85,8 @@ function generateClues(size: number, solution: number[][]): Clue[] {
 
   //merge clues
   while (clues.length > numClues) {
-    let clue1 = clues.splice(Math.floor(Math.random() * clues.length), 1)[0];
-    let clue2 = clues.splice(Math.floor(Math.random() * clues.length), 1)[0];
+    const clue1 = clues.splice(Math.floor(Math.random() * clues.length), 1)[0];
+    const clue2 = clues.splice(Math.floor(Math.random() * clues.length), 1)[0];
 
     if (clue1.indices.length + clue2.indices.length > maxClueSize) {
       //merged clue would be too big, put back
@@ -101,8 +96,8 @@ function generateClues(size: number, solution: number[][]): Clue[] {
     }
 
     let areAdjacent = false;
-    for (let idx1 of clue1.indices) {
-      for (let idx2 of clue2.indices) {
+    for (const idx1 of clue1.indices) {
+      for (const idx2 of clue2.indices) {
         //check if squares are neighboring horizontally
         if (idx1[0] == idx2[0] && Math.abs(idx1[1] - idx2[1]) == 1) {
           areAdjacent = true;
@@ -121,7 +116,7 @@ function generateClues(size: number, solution: number[][]): Clue[] {
       continue;
     }
 
-    let mergedClue: Clue = {
+    const mergedClue: Clue = {
       indices: clue1.indices.concat(clue2.indices).sort((a, b) => {
         if (a[0] != b[0]) {
           return a[0] - b[0];
@@ -131,7 +126,7 @@ function generateClues(size: number, solution: number[][]): Clue[] {
       value: 0,
     };
 
-    let possibleOperations: Array<"+" | "-" | "*" | "/"> = ["+", "*"]; //any clue can have commutative operations
+    const possibleOperations: Array<"+" | "-" | "*" | "/"> = ["+", "*"]; //any clue can have commutative operations
     if (mergedClue.indices.length == 2) {
       possibleOperations.push("-");
 
@@ -177,7 +172,7 @@ function generateClues(size: number, solution: number[][]): Clue[] {
 }
 
 function generatePuzzle(size: number): Puzzle {
-  let puzzle: Puzzle = { solution: generateSolution(size), clues: [] };
+  const puzzle: Puzzle = { solution: generateSolution(size), clues: [] };
   puzzle.clues = generateClues(size, puzzle.solution);
   return puzzle;
 }

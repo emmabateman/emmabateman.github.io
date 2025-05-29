@@ -4,7 +4,6 @@ function Square({
   value,
   possibleValues,
   clueText,
-  clueIndices,
   selected,
   borderStyles,
   inputMode,
@@ -12,7 +11,6 @@ function Square({
   value: number;
   possibleValues: number[];
   clueText: string;
-  clueIndices: [number, number][];
   selected: boolean;
   borderStyles: string[];
   inputMode: "final" | "possible";

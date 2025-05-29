@@ -7,10 +7,12 @@ import { Controls } from "./components/controls";
 import { Config, ConfigEditor } from "./components/config";
 import { generatePuzzle, Puzzle } from "./generate_puzzle";
 
+const DEFAULT_SIZE = 9;
+
 export default function Page() {
   const [config, setConfig] = useState<Config>({
     autoComplete: false,
-    size: 9,
+    size: DEFAULT_SIZE,
   });
 
   const [possibleValues, setPossibleValues] = useState<number[][][]>(
@@ -36,9 +38,10 @@ export default function Page() {
 
   //generate puzzle on mount
   useEffect(() => {
-    setPuzzle(generatePuzzle(config.size));
+    setPuzzle(generatePuzzle(DEFAULT_SIZE));
   }, []);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (config.autoComplete == true) {
       for (let i = 0; i < config.size; i++) {
@@ -52,6 +55,7 @@ export default function Page() {
       }
     }
   }, [config]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   function generateNewPuzzle() {
     setPossibleValues(
@@ -70,7 +74,7 @@ export default function Page() {
   }
 
   function updateFinalValue(x: number, y: number, n: number) {
-    let newFinalValues = finalValues.slice();
+    const newFinalValues = finalValues.slice();
     newFinalValues[x][y] = n;
     setFinalValues(newFinalValues);
 
@@ -92,10 +96,10 @@ export default function Page() {
       return;
     }
 
-    let values = possibleValues[x][y].slice();
+    const values = possibleValues[x][y].slice();
     values.splice(values.indexOf(n), 1);
 
-    let newPossibleValues = possibleValues.slice();
+    const newPossibleValues = possibleValues.slice();
     newPossibleValues[x][y] = values;
     setPossibleValues(newPossibleValues);
 
@@ -107,14 +111,14 @@ export default function Page() {
   function numberPress(n: number) {
     saveToHistory();
     if (activeSquareId) {
-      let [x, y] = activeSquareId.split(",").map((x) => parseInt(x));
+      const [x, y] = activeSquareId.split(",").map((x) => parseInt(x));
 
       if (inputMode == "final") {
         if (n >= 1 && n <= config.size) {
           updateFinalValue(x, y, n);
         } else if (n == 0) {
           //clear square
-          let newFinalValues = finalValues.slice();
+          const newFinalValues = finalValues.slice();
           newFinalValues[x][y] = null;
           setFinalValues(newFinalValues);
         }
@@ -131,7 +135,7 @@ export default function Page() {
             values = [];
           }
 
-          let newPossibleValues = possibleValues.slice();
+          const newPossibleValues = possibleValues.slice();
           newPossibleValues[x][y] = values;
           setPossibleValues(newPossibleValues);
         }
@@ -148,19 +152,19 @@ export default function Page() {
   }
 
   function saveToHistory() {
-    let possibleValuesCopy = possibleValues.map((x) =>
+    const possibleValuesCopy = possibleValues.map((x) =>
       x.map((y) => y.map((z) => z))
     );
-    let finalValuesCopy = finalValues.map((x) => x.map((y) => y));
-    let newHistory = history.slice();
+    const finalValuesCopy = finalValues.map((x) => x.map((y) => y));
+    const newHistory = history.slice();
     newHistory.push([possibleValuesCopy, finalValuesCopy]);
     setHistory(newHistory);
   }
 
   function undo() {
     if (history.length) {
-      let newHistory = history.slice();
-      let [newPossibleValues, newFinalValues] = newHistory.pop();
+      const newHistory = history.slice();
+      const [newPossibleValues, newFinalValues] = newHistory.pop();
       setHistory(newHistory);
       setPossibleValues(newPossibleValues);
       setFinalValues(newFinalValues);
@@ -186,7 +190,6 @@ export default function Page() {
             }}
           >
             <Grid
-              config={config}
               possibleValues={possibleValues}
               finalValues={finalValues}
               clues={puzzle ? puzzle.clues : []}
