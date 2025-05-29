@@ -31,7 +31,7 @@ function ConfigEditor({
 
   function toggleAutoComplete() {
     setInputDisabled(true);
-    let newConfig = {
+    const newConfig = {
       size: config.size,
       autoComplete: config.autoComplete,
     };
@@ -53,7 +53,7 @@ function ConfigEditor({
               className={`bi ${
                 config.autoComplete ? "bi-toggle-on" : "bi-toggle-off"
               } ${inputDisabled ? "disabled" : ""}`}
-              style={{fontSize: "1.5rem"}}
+              style={{ fontSize: "1.5rem" }}
             />
           </button>
         </div>
