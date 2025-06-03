@@ -11,15 +11,15 @@ function RecipeCard({
 }: {
   recipe: Recipe;
   myIngredients: JSON[];
-  addToShoppingList: (items: string[]) => void;
+  addToShoppingList: (_: string[]) => void;
 }) {
   const [showInstructions, setShowInstructions] = useState<boolean>(false);
 
   function numMatchingIngredients(): number {
-    return myIngredients.filter((x) =>
-      recipe.ingredients
-        .map((i) => i.name.toLowerCase())
-        .includes(x["strIngredient"].toLowerCase())
+    return recipe.ingredients.filter((i) =>
+      myIngredients
+        .map((j) => j["strIngredient"].toLowerCase())
+        .includes(i.name.toLowerCase())
     ).length;
   }
 
@@ -41,7 +41,7 @@ function RecipeCard({
       <div className="row">
         <div className="col-md-4">
           <div className="container d-flex h-100 w-100 align-items-start mt-4">
-            <img className="img-fluid" src={recipe.thumbnailUrl} />
+            <img className="img-fluid" src={recipe.thumbnailUrl} alt={recipe.name} />
           </div>
         </div>
         <div className="col-md-8">
@@ -75,19 +75,33 @@ function RecipeCard({
               </div>
             </div>
             <div>
-              <h4 className="card-title">{recipe.name}</h4>
+              <h4 className="card-title" hidden={!recipe.sourceUrl}>
+                <a href={recipe.sourceUrl} target="_blank">
+                  {recipe.name}
+                </a>
+              </h4>
+              <h4 className="card-title" hidden={recipe.sourceUrl != ""}>
+                {recipe.name}
+              </h4>
               <h6 className="card-text">{recipe.category}</h6>
               <h6 className="card-text">{recipe.region}</h6>
-              <p className="card-text">
+              <p className="card-text" hidden={showInstructions}>
                 {recipe.ingredients.map((x) => x.name).join(", ")}
               </p>
               <p className="card-text">
                 You have {numMatchingIngredients()} out of{" "}
                 {recipe.ingredients.length} ingredients
               </p>
-              <p className="card-text" hidden={!showInstructions}>
-                {recipe.instructions}
-              </p>
+              {recipe.ingredients.map((ingredient, i) => (
+                <p className="card-text" key={i} hidden={!showInstructions}>
+                  {ingredient.name}: {ingredient.measure}
+                </p>
+              ))}
+              {recipe.instructions.split("\n").map((line, i) => (
+                <p className="card-text" key={i} hidden={!showInstructions}>
+                  {line}
+                </p>
+              ))}
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ import { RecipeList } from "./components/recipe_list";
 import styles from "./styles.module.css";
 
 export default function Page() {
-  const [cookies, setCookie, _] = useCookies([
+  const [cookies, setCookie,] = useCookies([
     "my-ingredients",
     "shopping-list",
   ]);
@@ -24,8 +24,8 @@ export default function Page() {
   }, []);
 
   function addToShoppingList(items: string[]) {
-    let newShoppingItems = new Set(shoppingItems);
-    for (let item of items) {
+    const newShoppingItems = new Set(shoppingItems);
+    for (const item of items) {
       newShoppingItems.add(item);
     }
     setShoppingItems([...newShoppingItems]);
@@ -33,14 +33,14 @@ export default function Page() {
   }
 
   function removeFromShoppingList(item: string) {
-    let newShoppingItems = new Set(shoppingItems);
+    const newShoppingItems = new Set(shoppingItems);
     newShoppingItems.delete(item);
     setShoppingItems([...newShoppingItems]);
     setCookie("shopping-list", [...newShoppingItems]);
   }
 
   function addIngredient(ingredient: JSON): void {
-    let newIngredients = new Set(myIngredients);
+    const newIngredients = new Set(myIngredients);
     newIngredients.add(ingredient);
     setMyIngredients([...newIngredients]);
     setCookie(

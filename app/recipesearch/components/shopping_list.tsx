@@ -4,8 +4,8 @@ function ShoppingList({
   handlePurchaseItem,
 }: {
   items: string[];
-  handleRemoveItem: (string) => void;
-  handlePurchaseItem: (string) => void;
+  handleRemoveItem: (_: string) => void;
+  handlePurchaseItem: (_: string) => void;
 }) {
   return (
     <div className="card p-4 mt-4">

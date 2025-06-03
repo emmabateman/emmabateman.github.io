@@ -8,15 +8,11 @@ function SearchBar({
   handleAddIngredient,
 }: {
   ingredientData: JSON[];
-  isInMyIngredients: (ingredient: JSON) => boolean;
-  handleAddIngredient: (ingredient: JSON) => void;
+  isInMyIngredients: (_: JSON) => boolean;
+  handleAddIngredient: (_: JSON) => void;
 }) {
   const [searchText, setSearchText] = useState<string>("");
   const [searchResult, setSearchResult] = useState<JSON[]>([]);
-
-  useEffect(() => {
-    setSearchResult(ingredientData.filter((x) => !isInMyIngredients(x)));
-  }, [ingredientData]);
 
   //update filter
   useEffect(() => {
@@ -27,7 +23,7 @@ function SearchBar({
           !isInMyIngredients(x)
       )
     );
-  }, [searchText]);
+  }, [searchText, ingredientData]);
 
   function onAddIngredientClicked(ingredient) {
     handleAddIngredient(ingredient);
@@ -79,7 +75,7 @@ function IngredientList({
   handleRemoveIngredient,
 }: {
   ingredients: JSON[];
-  handleRemoveIngredient: (ingredient: JSON) => void;
+  handleRemoveIngredient: (_: JSON) => void;
 }) {
   return (
     <ul className="list-group mt-4">
@@ -115,7 +111,7 @@ function Pantry({
   ingredientData: JSON[];
   setIngredientData: (data: JSON[]) => void;
   cookies: object;
-  setCookie: (name: string, value: any) => void;
+  setCookie: (name: string, value: string[]) => void;
 }) {
   const ingredientUrl =
     "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
@@ -142,7 +138,7 @@ function Pantry({
   }, []);
 
   function removeIngredient(ingredient: JSON) {
-    let newIngredients = new Set(myIngredients);
+    const newIngredients = new Set(myIngredients);
     newIngredients.delete(ingredient);
     setMyIngredients([...newIngredients]);
     setCookie(
