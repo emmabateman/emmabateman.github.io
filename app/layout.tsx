@@ -1,4 +1,7 @@
+'use client';
+
 import { StrictMode } from "react";
+import { CookiesProvider } from "react-cookie";
 import { Navbar } from "../components/navbar";
 import { BootstrapClient } from "../components/bootstrap_client";
 
@@ -12,13 +15,16 @@ export default function RootLayout({
 }) {
   return (
     <StrictMode>
-      <html lang="en">
-        <body>
-          <Navbar />
-          <div className="container text-center px-5">{children}</div>
-          <BootstrapClient />
-        </body>
-      </html>
+      <CookiesProvider>
+        <Navbar />
+        <html lang="en">
+          <body>
+            <Navbar />
+            <div className="container text-center px-5">{children}</div>
+            <BootstrapClient />
+          </body>
+        </html>
+      </CookiesProvider>
     </StrictMode>
   );
 }
