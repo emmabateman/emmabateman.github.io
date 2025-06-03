@@ -16,7 +16,6 @@ export default function RootLayout({
   return (
     <StrictMode>
       <CookiesProvider>
-        <Navbar />
         <html lang="en">
           <body>
             <Navbar />
