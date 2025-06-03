@@ -19,7 +19,8 @@ export default function RootLayout({
         <Navbar />
         <html lang="en">
           <body>
-            <div className="container text-center">{children}</div>
+            <Navbar />
+            <div className="container text-center px-5">{children}</div>
             <BootstrapClient />
           </body>
         </html>
