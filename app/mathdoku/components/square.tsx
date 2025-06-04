@@ -28,16 +28,11 @@ function Square({
         <p className="position-absolute">{clueText}</p>
         <div hidden={value > 0} className={styles.possibleValuesGrid}>
           <div className={`row row-cols-3 g-0 ${styles.possibleValuesRow}`}>
-            {possibleValues.length
-              ? [...Array(Math.max(...possibleValues)).keys()].map((n) => (
-                  <div
-                    className={`col g-0 m-0 ${styles.possibleValue}`}
-                    key={n}
-                  >
-                    {possibleValues.includes(n + 1) ? n + 1 : ""}
-                  </div>
-                ))
-              : []}
+            {[...Array(9).keys()].map((n) => (
+              <div className={`col g-0 m-0 ${styles.possibleValue}`} key={n}>
+                {possibleValues.includes(n + 1) ? n + 1 : ""}
+              </div>
+            ))}
           </div>
         </div>
         <h1>{value}</h1>
