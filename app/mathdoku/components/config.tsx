@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Tooltip } from "bootstrap";
+import { useState, useEffect } from "react";
+
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 interface Config {
   size: number;
@@ -22,12 +23,6 @@ function ConfigEditor({
   useEffect(() => {
     setInputDisabled(false);
   }, [config]);
-
-  const tooltipRef = useRef(null);
-
-  useEffect(() => {
-    new Tooltip(tooltipRef.current);
-  }, []);
 
   function toggleAutoComplete() {
     setInputDisabled(true);
@@ -64,17 +59,20 @@ function ConfigEditor({
           <p className="m-0">Auto Complete</p>
         </div>
         <div className="col-auto align-content-center p-0">
-          <button
-            ref={tooltipRef}
-            className="btn btn-link"
-            data-bs-toggle="tooltip"
-            data-bs-title="When Auto Complete is enabled, setting a value will
-                           eliminate matching possible values in the same row
-                           and column, and removing all but one possible value
-                           will cause the remaining value to be set."
+          <OverlayTrigger
+            overlay={
+              <Tooltip>
+                When Auto Complete is enabled, setting a value will eliminate
+                matching possible values in the same row and column, and
+                removing all but one possible value will cause the remaining
+                value to be set.
+              </Tooltip>
+            }
           >
-            <i className="bi bi-question-circle" />
-          </button>
+            <button className="btn btn-link">
+              <i className="bi bi-question-circle" />
+            </button>
+          </OverlayTrigger>
         </div>
       </div>
       <button onClick={generateNewPuzzle}>Generate New</button>
