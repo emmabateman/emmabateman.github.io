@@ -7,6 +7,8 @@ import { Controls } from "./components/controls";
 import { Config, ConfigEditor } from "./components/config";
 import { generatePuzzle, Puzzle } from "./generate_puzzle";
 
+import { Footer } from "../../components/footer";
+
 const DEFAULT_SIZE = 9;
 
 export default function Page() {
@@ -173,49 +175,52 @@ export default function Page() {
 
   return (
     <div>
-      <div className="row">
-        <h1>Mathdoku</h1>
-        <h3 className="mb-4">My take on a KenKen clone</h3>
-      </div>
-      <div className="row">
-        <div className="col-lg-9">
-          <div
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key.match(/[0-9]/g)) {
-                numberPress(parseInt(e.key));
-              } else if (e.key == "u") {
-                undo();
-              }
-            }}
-          >
-            <Grid
-              possibleValues={possibleValues}
-              finalValues={finalValues}
-              clues={puzzle ? puzzle.clues : []}
-              activeSquareId={activeSquareId}
-              setActiveSquareId={setActiveSquareId}
-              inputMode={inputMode}
-              toggleInputMode={toggleInputMode}
-            />
-            <Controls
+      <div>
+        <div className="row">
+          <h1>Mathdoku</h1>
+          <h3 className="mb-4">My take on a KenKen clone</h3>
+        </div>
+        <div className="row">
+          <div className="col-lg-9">
+            <div
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key.match(/[0-9]/g)) {
+                  numberPress(parseInt(e.key));
+                } else if (e.key == "u") {
+                  undo();
+                }
+              }}
+            >
+              <Grid
+                possibleValues={possibleValues}
+                finalValues={finalValues}
+                clues={puzzle ? puzzle.clues : []}
+                activeSquareId={activeSquareId}
+                setActiveSquareId={setActiveSquareId}
+                inputMode={inputMode}
+                toggleInputMode={toggleInputMode}
+              />
+              <Controls
+                config={config}
+                numberPress={numberPress}
+                inputMode={inputMode}
+                toggleInputMode={toggleInputMode}
+                undo={undo}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3">
+            <h5>Settings</h5>
+            <ConfigEditor
               config={config}
-              numberPress={numberPress}
-              inputMode={inputMode}
-              toggleInputMode={toggleInputMode}
-              undo={undo}
+              setConfig={setConfig}
+              generateNewPuzzle={generateNewPuzzle}
             />
           </div>
         </div>
-        <div className="col-lg-3">
-          <h5>Settings</h5>
-          <ConfigEditor
-            config={config}
-            setConfig={setConfig}
-            generateNewPuzzle={generateNewPuzzle}
-          />
-        </div>
       </div>
+      <Footer gitHubLink="https://github.com/emmabateman/emmabateman.github.io/tree/main/app/mathdoku" />
     </div>
   );
 }
