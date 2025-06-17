@@ -10,10 +10,7 @@ import { RecipeList } from "./components/recipe_list";
 import styles from "./styles.module.css";
 
 export default function Page() {
-  const [cookies, setCookie,] = useCookies([
-    "my-ingredients",
-    "shopping-list",
-  ]);
+  const [cookies, setCookie] = useCookies(["my-ingredients", "shopping-list"]);
 
   const [myIngredients, setMyIngredients] = useState<JSON[]>([]);
   const [shoppingItems, setShoppingItems] = useState<string[]>([]);
@@ -50,35 +47,42 @@ export default function Page() {
   }
 
   return (
-    <div className={styles.page}>
-      <div className="col text-start">
-        <Pantry
-          myIngredients={myIngredients}
-          setMyIngredients={setMyIngredients}
-          addIngredient={addIngredient}
-          ingredientData={ingredientData}
-          setIngredientData={setIngredientData}
-          cookies={cookies}
-          setCookie={setCookie}
-        />
-        <ShoppingList
-          items={shoppingItems}
-          handleRemoveItem={removeFromShoppingList}
-          handlePurchaseItem={(item: string) => {
-            removeFromShoppingList(item);
-            addIngredient(
-              ingredientData.find(
-                (x) => x["strIngredient"].toLowerCase() == item.toLowerCase()
-              )
-            );
-          }}
-        />
+    <div>
+      <div>
+        <p>
+          Powered by <a href="https://www.themealdb.com">TheMealDB</a>
+        </p>
       </div>
-      <div className="col">
-        <RecipeList
-          myIngredients={myIngredients}
-          addToShoppingList={addToShoppingList}
-        />
+      <div className={styles.page}>
+        <div className="col text-start">
+          <Pantry
+            myIngredients={myIngredients}
+            setMyIngredients={setMyIngredients}
+            addIngredient={addIngredient}
+            ingredientData={ingredientData}
+            setIngredientData={setIngredientData}
+            cookies={cookies}
+            setCookie={setCookie}
+          />
+          <ShoppingList
+            items={shoppingItems}
+            handleRemoveItem={removeFromShoppingList}
+            handlePurchaseItem={(item: string) => {
+              removeFromShoppingList(item);
+              addIngredient(
+                ingredientData.find(
+                  (x) => x["strIngredient"].toLowerCase() == item.toLowerCase()
+                )
+              );
+            }}
+          />
+        </div>
+        <div className="col">
+          <RecipeList
+            myIngredients={myIngredients}
+            addToShoppingList={addToShoppingList}
+          />
+        </div>
       </div>
     </div>
   );
