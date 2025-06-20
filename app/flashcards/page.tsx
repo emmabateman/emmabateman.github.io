@@ -22,12 +22,20 @@ export default function Page() {
     );
   }
 
+  function deleteDeck(deck: Deck) {
+    if (deck.uuid == activeDeck.uuid) {
+      setActiveDeck(undefined);
+    }
+    setDecks(decks.filter((d) => d.uuid != deck.uuid));
+  }
+
   return (
     <div className="row">
       <div className="col-md-2">
         <DeckList
           decks={decks}
           setDecks={setDecks}
+          deleteDeck={deleteDeck}
           setActiveDeck={setActiveDeck}
           setMode={setMode}
         />

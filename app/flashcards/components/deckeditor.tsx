@@ -49,7 +49,7 @@ function DeckEditor({
       <input
         className="form-control"
         id="titleInput"
-        placeholder={deck ? deck.title : ""}
+        value={deck ? deck.title : ""}
         onChange={(e) => updateTitle(e.target.value)}
       ></input>
       {deck ? deck.cards.map((card, idx) =>
@@ -60,7 +60,7 @@ function DeckEditor({
           <input
             className="form-control"
             id={`card${idx}Front`}
-            placeholder={card.front}
+            value={card.front}
             onChange={(e) => updateFront(e.target.value, idx)}
           ></input>
           <label htmlFor={`card${idx}Back`} className="form-label">
@@ -69,7 +69,7 @@ function DeckEditor({
           <input
             className="form-control"
             id={`card${idx}Back`}
-            placeholder={card.back}
+            value={card.back}
             onChange={(e) => updateBack(e.target.value, idx)}
           ></input>
         </div>
