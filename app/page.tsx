@@ -30,6 +30,11 @@ export default function Page() {
             </a>
           </div>
           <div>
+            <a href="/flashcards">
+              <button className="btn">Flashcard Study Tool</button>
+            </a>
+          </div>
+          <div>
             <a href="/mathdoku">
               <button className="btn">Mathdoku</button>
             </a>
