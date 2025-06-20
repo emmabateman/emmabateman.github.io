@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { DeckList, Deck } from "./components/decklist";
-import { DeckViewer, Card } from "./components/deckviewer";
+import { DeckViewer } from "./components/deckviewer";
 import { DeckEditor } from "./components/deckeditor";
 
 export default function Page() {

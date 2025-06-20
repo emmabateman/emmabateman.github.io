@@ -27,7 +27,7 @@ function DeckList({
   const [deletingDeck, setDeletingDeck] = useState<Deck>(undefined);
 
   function loadDecks() {
-    let newDecks = [];
+    const newDecks = [];
 
     //load default decks
     newDecks.push({
@@ -40,12 +40,12 @@ function DeckList({
   }
 
   function createNewDeck() {
-    let newDeck = {
+    const newDeck = {
       uuid: uuidv1(),
       title: "New deck",
       cards: [],
     };
-    let newDecks = decks;
+    const newDecks = decks;
     newDecks.push(newDeck);
     setDecks(newDecks);
     setActiveDeck(newDeck);

@@ -11,7 +11,7 @@ function DeckEditor({
 }) {
   function updateTitle(title: string) {
     if (deck) {
-      let newDeck = deck;
+      const newDeck = deck;
       newDeck.title = title;
       setDeck(newDeck);
     }
@@ -19,7 +19,7 @@ function DeckEditor({
 
   function addCard() {
     if (deck) {
-      let newDeck = deck;
+      const newDeck = deck;
       newDeck.cards.push({ front: "", back: "" });
       setDeck(newDeck);
     }
@@ -27,7 +27,7 @@ function DeckEditor({
 
   function updateFront(content: string, cardNo: number) {
     if (deck) {
-        let newDeck = deck;
+        const newDeck = deck;
         newDeck.cards[cardNo].front = content;
         setDeck(newDeck);
     }
@@ -35,7 +35,7 @@ function DeckEditor({
 
   function updateBack(content: string, cardNo: number) {
     if (deck) {
-        let newDeck = deck;
+        const newDeck = deck;
         newDeck.cards[cardNo].back = content;
         setDeck(newDeck);
     }
