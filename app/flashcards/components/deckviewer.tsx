@@ -11,7 +11,7 @@ interface Card {
   back: string;
 }
 
-function Deck({ cards }: { cards: Card[] }) {
+function DeckViewer({ cards }: { cards: Card[] }) {
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
   function goToPrevious() {
@@ -35,18 +35,25 @@ function Deck({ cards }: { cards: Card[] }) {
         <i className="bi bi-chevron-left" />
       </div>
       {cards.map((card, i) => (
-        <div className={styles.flashcardContainer} hidden={activeIdx != i} key={i}>
+        <div
+          className={styles.flashcardContainer}
+          hidden={activeIdx != i}
+          key={i}
+        >
           <Flashcard front={card.front} back={card.back} />
         </div>
       ))}
       <div
-        className={`btn col-md-1 ${activeIdx >= cards.length - 1 ? "disabled" : ""}`}
+        className={`btn col-md-1 ${
+          activeIdx >= cards.length - 1 ? "disabled" : ""
+        }`}
+        onClick={goToNext}
       >
-        <i className="bi bi-chevron-right" onClick={goToNext} />
+        <i className="bi bi-chevron-right" />
       </div>
     </div>
   );
 }
 
-export { Deck };
+export { DeckViewer };
 export type { Card };

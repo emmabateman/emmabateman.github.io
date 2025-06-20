@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
+import { v1 as uuidv1 } from "uuid";
 
-import { Card } from "./deck";
+import { Card } from "./deckviewer";
 
 import spanish_vocab from "../assets/data";
 
 interface Deck {
+  uuid: string;
   title: string;
   cards: Card[];
 }
 
 function DeckList({
+  decks,
+  setDecks,
   setActiveDeck,
+  setMode,
 }: {
-  setActiveDeck: (cards: Card[]) => void;
+  decks: Deck[],
+  setDecks: (decks: Deck[]) => void,
+  setActiveDeck: (number) => void,
+  setMode: (mode: 'study'|'edit') => void
 }) {
-  const [decks, setDecks] = useState<Deck[]>([]);
-
   function loadDecks() {
     let newDecks = [];
 
@@ -26,11 +32,12 @@ function DeckList({
   }
 
   function createNewDeck() {
-    let newDeck = { title: "New deck", cards: [{front: "hello", back: "world"}]}
+    let newDeck = { uuid: uuidv1(), title: "New deck", cards: [{front: "hello", back: "world"}]}
     let newDecks = decks;
     newDecks.push(newDeck);
     setDecks(newDecks);
-    setActiveDeck(newDeck.cards);
+    setActiveDeck(newDeck);
+    setMode('edit');
   }
 
   useEffect(loadDecks, []);
@@ -41,9 +48,10 @@ function DeckList({
         <li
           className="card"
           onClick={() => {
-            setActiveDeck(deck.cards);
+            setActiveDeck(deck);
+            setMode('study');
           }}
-          key={deck.title}
+          key={deck.uuid}
         >
           <h5 className="card-title">{deck.title}</h5>
         </li>
@@ -54,3 +62,4 @@ function DeckList({
 }
 
 export { DeckList };
+export type { Deck };

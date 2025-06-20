@@ -1,0 +1,88 @@
+"use client";
+
+import { Deck } from "./decklist";
+
+function DeckEditor({
+  deck,
+  setDeck,
+}: {
+  deck: Deck;
+  setDeck: (deck: Deck) => void;
+}) {
+  function updateTitle(title: string) {
+    if (deck) {
+      let newDeck = deck;
+      newDeck.title = title;
+      setDeck(newDeck);
+    }
+  }
+
+  function addCard() {
+    if (deck) {
+      let newDeck = deck;
+      newDeck.cards.push({ front: "", back: "" });
+      setDeck(newDeck);
+    }
+  }
+
+  function updateFront(content: string, cardNo: number) {
+    if (deck) {
+        let newDeck = deck;
+        newDeck.cards[cardNo].front = content;
+        setDeck(newDeck);
+    }
+  }
+
+  function updateBack(content: string, cardNo: number) {
+    if (deck) {
+        let newDeck = deck;
+        newDeck.cards[cardNo].back = content;
+        setDeck(newDeck);
+    }
+  }
+
+  return (
+    <div>
+      <label htmlFor="titleInput" className="form-label">
+        Title
+      </label>
+      <input
+        className="form-control"
+        id="titleInput"
+        placeholder={deck ? deck.title : ""}
+        onChange={(e) => updateTitle(e.target.value)}
+      ></input>
+      {deck ? deck.cards.map((card, idx) =>
+        <div key={idx}>
+          <label htmlFor={`card${idx}Front`} className="form-label">
+            Front
+          </label>
+          <input
+            className="form-control"
+            id={`card${idx}Front`}
+            placeholder={card.front}
+            onChange={(e) => updateFront(e.target.value, idx)}
+          ></input>
+          <label htmlFor={`card${idx}Back`} className="form-label">
+            Back
+          </label>
+          <input
+            className="form-control"
+            id={`card${idx}Back`}
+            placeholder={card.back}
+            onChange={(e) => updateBack(e.target.value, idx)}
+          ></input>
+        </div>
+      ) : []}
+      <button
+        className="btn btn-primary"
+        onClick={addCard}
+      >
+        <i className="bi bi-plus" />
+        Add Card
+      </button>
+    </div>
+  );
+}
+
+export { DeckEditor };
