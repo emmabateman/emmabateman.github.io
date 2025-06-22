@@ -30,8 +30,23 @@ export default function Page() {
   }
 
   return (
-    <div className="row">
-      <div className="col-md-2">
+    <div>
+    <div className="row d-flex flex-row-reverse">
+      <div className="col-lg-8" hidden={!activeDeck || mode != "study"}>
+        <DeckViewer
+          cards={activeDeck ? activeDeck.cards : []}
+          key={activeDeck ? activeDeck.uuid : ""}
+        />
+      </div>
+      <div className="col-lg-8" hidden={!activeDeck || mode != "edit"}>
+        <DeckEditor
+          deck={activeDeck}
+          setDeck={updateActiveDeck}
+          key={activeDeck ? activeDeck.uuid : ""}
+        />
+      </div>
+      <div className="col-lg-8" hidden={activeDeck != undefined}></div>
+      <div className="col-lg-4">
         <DeckList
           decks={decks}
           setDecks={setDecks}
@@ -40,19 +55,8 @@ export default function Page() {
           setMode={setMode}
         />
       </div>
-      <div className="col-md-8" hidden={!activeDeck || mode != "study"}>
-        <DeckViewer
-          cards={activeDeck ? activeDeck.cards : []}
-          key={activeDeck ? activeDeck.uuid : ""}
-        />
-      </div>
-      <div className="col-md-8" hidden={!activeDeck || mode != "edit"}>
-        <DeckEditor
-          deck={activeDeck}
-          setDeck={updateActiveDeck}
-          key={activeDeck ? activeDeck.uuid : ""}
-        />
-      </div>
+    </div>
+    <div className="fixed-bottom"><a href="https://www.vecteezy.com/free-vector/lined-paper-texture">Lined Paper Texture Vectors by Vecteezy</a></div>
     </div>
   );
 }

@@ -27,16 +27,16 @@ function DeckViewer({ cards }: { cards: Card[] }) {
   }
 
   return (
-    <div className="row">
+    <div className="row mb-5">
       <div
-        className={`btn col-md-1 ${activeIdx <= 0 ? "disabled" : ""}`}
+        className={`btn btn-primary col-1 ${activeIdx <= 0 ? "disabled" : ""}`}
         onClick={goToPrevious}
       >
         <i className="bi bi-chevron-left" />
       </div>
       {cards.map((card, i) => (
         <div
-          className={styles.flashcardContainer}
+          className={`col-10 ${styles.flashcardContainer}`}
           hidden={activeIdx != i}
           key={i}
         >
@@ -44,7 +44,7 @@ function DeckViewer({ cards }: { cards: Card[] }) {
         </div>
       ))}
       <div
-        className={`btn col-md-1 ${
+        className={`btn btn-primary col-1 ${
           activeIdx >= cards.length - 1 ? "disabled" : ""
         }`}
         onClick={goToNext}
