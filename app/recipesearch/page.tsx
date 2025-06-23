@@ -50,6 +50,11 @@ export default function Page() {
 
   return (
     <div>
+      <div>
+        <p>
+          Powered by <a href="https://www.themealdb.com">TheMealDB</a>
+        </p>
+      </div>
       <div className={styles.page}>
         <div className="col text-start">
           <Pantry
