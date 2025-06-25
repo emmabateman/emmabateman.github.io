@@ -1,5 +1,4 @@
 export default function Page() {
-  console.log("rendering");
   return (
     <div className="row mt-5 gx-5 d-flex">
       <div className="col-lg-8 container text-start mt-5 p-4">
