@@ -6,6 +6,8 @@ import { DeckList, Deck } from "./components/decklist";
 import { DeckViewer } from "./components/deckviewer";
 import { DeckEditor } from "./components/deckeditor";
 
+import { Footer } from "../../components/footer";
+
 export default function Page() {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [activeDeck, setActiveDeck] = useState<Deck>(undefined);
@@ -23,7 +25,7 @@ export default function Page() {
   }
 
   function deleteDeck(deck: Deck) {
-    if (deck.uuid == activeDeck.uuid) {
+    if (activeDeck && deck.uuid == activeDeck.uuid) {
       setActiveDeck(undefined);
     }
     setDecks(decks.filter((d) => d.uuid != deck.uuid));
@@ -31,32 +33,41 @@ export default function Page() {
 
   return (
     <div>
-    <div className="row d-flex flex-row-reverse">
-      <div className="col-lg-8" hidden={!activeDeck || mode != "study"}>
-        <DeckViewer
-          cards={activeDeck ? activeDeck.cards : []}
-          key={activeDeck ? activeDeck.uuid : ""}
-        />
+      <div className="row d-flex flex-row-reverse">
+        <div className="col-lg-8" hidden={!activeDeck || mode != "study"}>
+          <DeckViewer
+            cards={activeDeck ? activeDeck.cards : []}
+            key={activeDeck ? activeDeck.uuid : ""}
+          />
+        </div>
+        <div className="col-lg-8" hidden={!activeDeck || mode != "edit"}>
+          <DeckEditor
+            deck={activeDeck}
+            setDeck={updateActiveDeck}
+            key={activeDeck ? activeDeck.uuid : ""}
+          />
+        </div>
+        <div className="col-lg-8" hidden={activeDeck != undefined}></div>
+        <div className="col-lg-4">
+          <DeckList
+            decks={decks}
+            setDecks={setDecks}
+            deleteDeck={deleteDeck}
+            setActiveDeck={setActiveDeck}
+            setMode={setMode}
+          />
+        </div>
       </div>
-      <div className="col-lg-8" hidden={!activeDeck || mode != "edit"}>
-        <DeckEditor
-          deck={activeDeck}
-          setDeck={updateActiveDeck}
-          key={activeDeck ? activeDeck.uuid : ""}
-        />
-      </div>
-      <div className="col-lg-8" hidden={activeDeck != undefined}></div>
-      <div className="col-lg-4">
-        <DeckList
-          decks={decks}
-          setDecks={setDecks}
-          deleteDeck={deleteDeck}
-          setActiveDeck={setActiveDeck}
-          setMode={setMode}
-        />
-      </div>
-    </div>
-    <div className="fixed-bottom"><a href="https://www.vecteezy.com/free-vector/lined-paper-texture">Lined Paper Texture Vectors by Vecteezy</a></div>
+      <Footer
+        gitHubLink="https://github.com/emmabateman/emmabateman.github.io/tree/main/app/recipesearch"
+        addtlContent={
+          <div className="flex-row align-items-center">
+            <a href="https://www.vecteezy.com/free-vector/lined-paper-texture">
+              Lined Paper Texture Vectors by Vecteezy
+            </a>
+          </div>
+        }
+      />
     </div>
   );
 }
