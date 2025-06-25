@@ -3,7 +3,7 @@ function Footer({
   addtlContent,
 }: {
   gitHubLink: string;
-  addtlContent: React.ReactElement;
+  addtlContent?: React.ReactElement;
 }) {
   return (
     <div className="sticky-bottom bg-white d-flex flex-row">
