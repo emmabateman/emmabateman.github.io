@@ -59,7 +59,7 @@ export default function Page() {
         </div>
       </div>
       <Footer
-        gitHubLink="https://github.com/emmabateman/emmabateman.github.io/tree/main/app/recipesearch"
+        gitHubLink="https://github.com/emmabateman/emmabateman.github.io/tree/main/app/flashcards"
         addtlContent={
           <div className="flex-row align-items-center">
             <a href="https://www.vecteezy.com/free-vector/lined-paper-texture">
