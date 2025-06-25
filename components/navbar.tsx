@@ -10,7 +10,7 @@ function NavItem({ link, title }: { link: string; title: string }) {
 
 function Navbar() {
   return (
-    <div className="navbar navbar-expand-md bg-dark p-2 mb-4" data-bs-theme="dark">
+    <div className="navbar navbar-expand-md bg-dark p-2 mb-4 sticky-top" data-bs-theme="dark">
       <div className="container">
         <button
           className="navbar-toggler"

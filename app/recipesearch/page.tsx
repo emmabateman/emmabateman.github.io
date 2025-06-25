@@ -7,6 +7,8 @@ import { Pantry } from "./components/pantry";
 import { ShoppingList } from "./components/shopping_list";
 import { RecipeList } from "./components/recipe_list";
 
+import { Footer } from "../../components/footer";
+
 import styles from "./styles.module.css";
 
 export default function Page() {
@@ -84,6 +86,10 @@ export default function Page() {
           />
         </div>
       </div>
+      <Footer
+        gitHubLink="https://github.com/emmabateman/emmabateman.github.io/tree/main/app/recipesearch"
+        addtlContent={<div className="flex-row align-items-center">Powered by <a href="https://www.themealdb.com">TheMealDB</a></div>}
+      />
     </div>
   );
 }
