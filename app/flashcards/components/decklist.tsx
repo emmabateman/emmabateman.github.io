@@ -3,6 +3,8 @@ import { v1 as uuidv1 } from "uuid";
 
 import { Card } from "./deckviewer";
 
+import styles from "../styles.module.css"
+
 import spanish_vocab from "../assets/data";
 
 interface Deck {
@@ -92,7 +94,7 @@ function DeckList({
       </div>
       <ul>
         {decks.map((deck) => (
-          <li className="card" key={deck.uuid}>
+          <li className={`card ${styles.deck}`} key={deck.uuid}>
             <h5
               className="card-title"
               onClick={() => {
@@ -102,7 +104,7 @@ function DeckList({
             >
               {deck.title}
             </h5>
-            <div className="d-flex flex-row-reverse">
+            <div className={`d-flex flex-row-reverse h-100 align-items-end ${styles.index_card_body}`}>
               <button
                 className="btn text-danger"
                 onClick={() => setDeletingDeck(deck)}
@@ -110,7 +112,7 @@ function DeckList({
                 data-bs-target="#deleteModal"
                 aria-label="Delete"
               >
-                <i className="bi bi-trash" />
+                <i className="bi bi-trash bg-white" />
               </button>
               <button
                 className="btn text-secondary"
@@ -120,12 +122,12 @@ function DeckList({
                 }}
                 aria-label="Edit"
               >
-                <i className="bi bi-pencil" />
+                <i className="bi bi-pencil bg-white" />
               </button>
             </div>
           </li>
         ))}
-        <li className="card" onClick={createNewDeck} key="new">
+        <li className={`card ${styles.deck}`} onClick={createNewDeck} key="new">
           <h5 className="card-title">New</h5>
         </li>
       </ul>
