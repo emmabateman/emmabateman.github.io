@@ -86,7 +86,10 @@ export default function Page() {
           />
         </div>
       </div>
-      <Footer gitHubLink="https://github.com/emmabateman/emmabateman.github.io/tree/main/app/recipesearch" />
+      <Footer
+        gitHubLink="https://github.com/emmabateman/emmabateman.github.io/tree/main/app/recipesearch"
+        addtlContent={<div className="flex-row align-items-center">Powered by <a href="https://www.themealdb.com">TheMealDB</a></div>}
+      />
     </div>
   );
 }
