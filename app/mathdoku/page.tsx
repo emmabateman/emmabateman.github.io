@@ -14,46 +14,31 @@ const DEFAULT_SIZE = 9;
 export default function Page() {
   const [config, setConfig] = useState<Config>({
     autoComplete: false,
-    size: DEFAULT_SIZE,
   });
 
-  const [possibleValues, setPossibleValues] = useState<number[][][]>(
-    new Array(config.size).fill(null).map(() =>
-      new Array(config.size).fill(
-        [...Array(config.size).keys()].map((n) => n + 1) //numbers 1 through size
-      )
-    )
-  );
+  const [puzzle, setPuzzle] = useState<Puzzle>();
 
-  const [finalValues, setFinalValues] = useState<number[][]>(
-    new Array(config.size)
-      .fill(null)
-      .map(() => new Array(config.size).fill(null))
-  );
+  const [possibleValues, setPossibleValues] = useState<number[][][]>([]);
 
-  const [errorStates, setErrorStates] = useState<boolean[][]>(
-    new Array(config.size)
-      .fill(null)
-      .map(() => new Array(config.size).fill(false))
-  );
+  const [finalValues, setFinalValues] = useState<number[][]>([]);
+
+  const [errorStates, setErrorStates] = useState<boolean[][]>([]);
 
   const [history, setHistory] = useState<[number[][][], number[][]][]>([]);
 
   const [activeSquareId, setActiveSquareId] = useState<string>("");
   const [inputMode, setInputMode] = useState<"final" | "possible">("final"); //TODO: replace with enum
 
-  const [puzzle, setPuzzle] = useState<Puzzle>();
-
   //generate puzzle on mount
   useEffect(() => {
-    setPuzzle(generatePuzzle(DEFAULT_SIZE));
+    generateNewPuzzle(DEFAULT_SIZE);
   }, []);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (config.autoComplete == true) {
-      for (let i = 0; i < config.size; i++) {
-        for (let j = 0; j < config.size; j++) {
+      for (let i = 0; i < puzzle.size; i++) {
+        for (let j = 0; j < puzzle.size; j++) {
           if (finalValues[i][j] != null) {
             updateFinalValue(i, j, finalValues[i][j]);
           } else if (possibleValues[i][j].length == 1) {
@@ -70,15 +55,15 @@ export default function Page() {
       return;
     }
 
-    const newErrorStates = new Array(config.size)
+    const newErrorStates = new Array(puzzle.size)
       .fill(null)
-      .map(() => new Array(config.size).fill(false));
+      .map(() => new Array(puzzle.size).fill(false));
 
     //check rows and columns
-    for (let i = 0; i < config.size; i++) {
-      for (let j = 0; j < config.size; j++) {
+    for (let i = 0; i < puzzle.size; i++) {
+      for (let j = 0; j < puzzle.size; j++) {
         if (finalValues[i][j]) {
-          for (let k = 0; k < config.size; k++) {
+          for (let k = 0; k < puzzle.size; k++) {
             if (j != k && finalValues[i][j] == finalValues[i][k]) {
               newErrorStates[i][j] = true;
               newErrorStates[i][k] = true;
@@ -107,7 +92,7 @@ export default function Page() {
           case "/":
             reduceFunc = (a: number, b: number) =>
               Math.max(a, b) / Math.min(a, b);
-              break;
+            break;
           default:
             reduceFunc = (a: number, b: number) => a + b;
         }
@@ -120,20 +105,21 @@ export default function Page() {
     setErrorStates(newErrorStates);
   }, [finalValues, puzzle]);
 
-  function generateNewPuzzle() {
+  function generateNewPuzzle(size: number) {
     setPossibleValues(
-      new Array(config.size).fill(null).map(() =>
-        new Array(config.size).fill(
-          [...Array(config.size).keys()].map((n) => n + 1) //numbers 1 through size
+      new Array(size).fill(null).map(() =>
+        new Array(size).fill(
+          [...Array(size).keys()].map((n) => n + 1) //numbers 1 through size
         )
       )
     );
     setFinalValues(
-      new Array(config.size)
-        .fill(null)
-        .map(() => new Array(config.size).fill(null))
+      new Array(size).fill(null).map(() => new Array(size).fill(null))
     );
-    setPuzzle(generatePuzzle(config.size));
+    setErrorStates(
+      new Array(size).fill(null).map(() => new Array(size).fill(false))
+    );
+    setPuzzle(generatePuzzle(size));
   }
 
   function updateFinalValue(x: number, y: number, n: number) {
@@ -143,7 +129,7 @@ export default function Page() {
 
     if (config.autoComplete) {
       //remove from possible values in the same row/column
-      for (let i = 0; i < config.size; i++) {
+      for (let i = 0; i < puzzle.size; i++) {
         if (i != x) {
           removePossibleValue(i, y, n);
         }
@@ -177,7 +163,7 @@ export default function Page() {
       const [x, y] = activeSquareId.split(",").map((x) => parseInt(x));
 
       if (inputMode == "final") {
-        if (n >= 1 && n <= config.size) {
+        if (n >= 1 && n <= puzzle.size) {
           updateFinalValue(x, y, n);
         } else if (n == 0) {
           //clear square
@@ -190,7 +176,7 @@ export default function Page() {
           removePossibleValue(x, y, n);
         } else {
           let values = possibleValues[x][y].slice();
-          if (n >= 1 && n <= config.size) {
+          if (n >= 1 && n <= puzzle.size) {
             values.push(n);
           }
           if (n == 0) {
@@ -264,7 +250,7 @@ export default function Page() {
                 toggleInputMode={toggleInputMode}
               />
               <Controls
-                config={config}
+                size={puzzle ? puzzle.size : DEFAULT_SIZE}
                 numberPress={numberPress}
                 inputMode={inputMode}
                 toggleInputMode={toggleInputMode}
@@ -277,7 +263,7 @@ export default function Page() {
             <ConfigEditor
               config={config}
               setConfig={setConfig}
-              generateNewPuzzle={generateNewPuzzle}
+              generateNewPuzzle={() => generateNewPuzzle(DEFAULT_SIZE)}
             />
           </div>
         </div>
