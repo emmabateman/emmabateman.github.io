@@ -6,7 +6,6 @@ const maxClueSize = 4;
 interface Clue {
   indices: [number, number][];
   operation?: "+" | "-" | "/" | "*";
-
   value: number;
 }
 

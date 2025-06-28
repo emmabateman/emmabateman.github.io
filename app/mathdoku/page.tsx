@@ -31,6 +31,12 @@ export default function Page() {
       .map(() => new Array(config.size).fill(null))
   );
 
+  const [errorStates, setErrorStates] = useState<boolean[][]>(
+    new Array(config.size)
+      .fill(null)
+      .map(() => new Array(config.size).fill(false))
+  );
+
   const [history, setHistory] = useState<[number[][][], number[][]][]>([]);
 
   const [activeSquareId, setActiveSquareId] = useState<string>("");
@@ -58,6 +64,61 @@ export default function Page() {
     }
   }, [config]);
   /* eslint-enable react-hooks/exhaustive-deps */
+
+  useEffect(() => {
+    if (!puzzle) {
+      return;
+    }
+
+    const newErrorStates = new Array(config.size)
+      .fill(null)
+      .map(() => new Array(config.size).fill(false));
+
+    //check rows and columns
+    for (let i = 0; i < config.size; i++) {
+      for (let j = 0; j < config.size; j++) {
+        if (finalValues[i][j]) {
+          for (let k = 0; k < config.size; k++) {
+            if (j != k && finalValues[i][j] == finalValues[i][k]) {
+              newErrorStates[i][j] = true;
+              newErrorStates[i][k] = true;
+            }
+            if (i != k && finalValues[i][j] == finalValues[k][j]) {
+              newErrorStates[i][j] = true;
+              newErrorStates[k][j] = true;
+            }
+          }
+        }
+      }
+    }
+
+    //check math
+    for (const clue of puzzle.clues) {
+      const values = clue.indices.map(([i, j]) => finalValues[i][j]);
+      if (!values.includes(null)) {
+        let reduceFunc: (a: number, b: number) => number;
+        switch (clue.operation) {
+          case "-":
+            reduceFunc = (a: number, b: number) => Math.abs(a - b);
+            break;
+          case "*":
+            reduceFunc = (a: number, b: number) => a * b;
+            break;
+          case "/":
+            reduceFunc = (a: number, b: number) =>
+              Math.max(a, b) / Math.min(a, b);
+              break;
+          default:
+            reduceFunc = (a: number, b: number) => a + b;
+        }
+        if (reduceFunc && values.reduce(reduceFunc) != clue.value) {
+          clue.indices.map(([i, j]) => (newErrorStates[i][j] = true));
+        }
+      }
+    }
+
+    setErrorStates(newErrorStates);
+  }, [finalValues, puzzle]);
 
   function generateNewPuzzle() {
     setPossibleValues(
@@ -195,6 +256,7 @@ export default function Page() {
               <Grid
                 possibleValues={possibleValues}
                 finalValues={finalValues}
+                errorStates={errorStates}
                 clues={puzzle ? puzzle.clues : []}
                 activeSquareId={activeSquareId}
                 setActiveSquareId={setActiveSquareId}

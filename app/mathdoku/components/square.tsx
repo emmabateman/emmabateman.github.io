@@ -7,6 +7,7 @@ function Square({
   selected,
   borderStyles,
   inputMode,
+  hasError,
 }: {
   value: number;
   possibleValues: number[];
@@ -14,6 +15,7 @@ function Square({
   selected: boolean;
   borderStyles: string[];
   inputMode: "final" | "possible";
+  hasError: boolean;
 }) {
   return (
     <div
@@ -35,7 +37,7 @@ function Square({
             ))}
           </div>
         </div>
-        <h1>{value}</h1>
+        <h1 className={hasError ? "text-danger" : ""}>{value}</h1>
       </div>
     </div>
   );
