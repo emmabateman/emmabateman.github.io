@@ -27,7 +27,12 @@ function Square({
           inputMode == "possible" ? styles.guessMode : ""
         }`}
       >
-        <p className="position-absolute">{clueText}</p>
+        <div className={styles.clueText}>
+          <p className="position-absolute">{clueText}</p>
+          <p hidden={!hasError} className="text-danger text-end">
+            *
+          </p>
+        </div>
         <div hidden={value > 0} className={styles.possibleValuesGrid}>
           <div className={`row row-cols-3 g-0 ${styles.possibleValuesRow}`}>
             {[...Array(9).keys()].map((n) => (
@@ -37,7 +42,9 @@ function Square({
             ))}
           </div>
         </div>
-        <h1 className={hasError ? "text-danger" : ""}>{value}</h1>
+        <p className={`${styles.valueText} ${hasError ? "text-danger" : ""}`}>
+          {value}
+        </p>
       </div>
     </div>
   );
