@@ -8,6 +8,7 @@ import { Clue } from "../generate_puzzle";
 function Grid({
   possibleValues,
   finalValues,
+  errorStates,
   clues,
   activeSquareId,
   setActiveSquareId,
@@ -16,6 +17,7 @@ function Grid({
 }: {
   possibleValues: number[][][];
   finalValues: number[][];
+  errorStates: boolean[][];
   clues: Clue[];
   activeSquareId: string;
   setActiveSquareId: (id: string) => void;
@@ -24,7 +26,6 @@ function Grid({
 }) {
   //clueText is a 2d array of strings the same size as finalValues
   const clueText = finalValues.map((x) => x.map(() => ""));
-  console.log(clueText, clueText[0][0]);
   for (const clue of clues) {
     clueText[clue.indices[0][0]][clue.indices[0][1]] =
       clue.value.toString() + (clue.operation ? clue.operation : "");
@@ -84,6 +85,7 @@ function Grid({
                 clueText={clueText[i][j]}
                 selected={activeSquareId == `${i},${j}`}
                 inputMode={inputMode}
+                hasError={errorStates[i][j]}
               />
             </div>
           ))}
