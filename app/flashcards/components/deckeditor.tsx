@@ -51,7 +51,7 @@ function DeckEditor({
         Title
       </label>
       <input
-        className="form-control"
+        className="form-control mx-4 w-75"
         id="titleInput"
         value={deck ? deck.title : ""}
         onChange={(e) => updateTitle(e.target.value)}

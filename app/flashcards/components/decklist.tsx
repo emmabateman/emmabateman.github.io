@@ -3,7 +3,7 @@ import { v1 as uuidv1 } from "uuid";
 
 import { Card } from "./deckviewer";
 
-import styles from "../styles.module.css"
+import styles from "../styles.module.css";
 
 import spanish_vocab from "../assets/data";
 
@@ -94,20 +94,24 @@ function DeckList({
       </div>
       <ul>
         {decks.map((deck) => (
-          <li className={`card ${styles.deck}`} key={deck.uuid}>
-            <h5
-              className="card-title"
-              onClick={() => {
-                setActiveDeck(deck);
-                setMode("study");
-              }}
+          <li
+            className={`card ${styles.deck}`}
+            key={deck.uuid}
+            onClick={() => {
+              setActiveDeck(deck);
+              setMode("study");
+            }}
+          >
+            <h5 className="card-title">{deck.title}</h5>
+            <div
+              className={`d-flex flex-row-reverse h-100 align-items-end ${styles.index_card_body}`}
             >
-              {deck.title}
-            </h5>
-            <div className={`d-flex flex-row-reverse h-100 align-items-end ${styles.index_card_body}`}>
               <button
                 className="btn text-danger"
-                onClick={() => setDeletingDeck(deck)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeletingDeck(deck);
+                }}
                 data-bs-toggle="modal"
                 data-bs-target="#deleteModal"
                 aria-label="Delete"
@@ -116,7 +120,8 @@ function DeckList({
               </button>
               <button
                 className="btn text-secondary"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setActiveDeck(deck);
                   setMode("edit");
                 }}
