@@ -132,8 +132,8 @@ function DeckList({
             </div>
           </li>
         ))}
-        <li className={`card ${styles.deck}`} onClick={createNewDeck} key="new">
-          <h5 className="card-title">New</h5>
+        <li className={`card btn btn-outline-primary ${styles.deck}`} onClick={createNewDeck} key="new">
+          <h4 className="m-3"><i className="bi bi-plus"/>New</h4>
         </li>
       </ul>
     </div>
