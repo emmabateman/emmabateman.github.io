@@ -6,7 +6,7 @@ function Footer({
   addtlContent: React.ReactElement;
 }) {
   return (
-    <div className="sticky-bottom bg-white d-flex flex-row">
+    <div className="fixed-bottom bg-white d-flex flex-row px-5">
       <div className="d-flex flex-column align-items-start justify-content-center">
         {addtlContent}
       </div>
