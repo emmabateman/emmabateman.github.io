@@ -10,9 +10,11 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 function DeckEditor({
   deck,
   setDeck,
+  finishEditing,
 }: {
   deck: Deck;
   setDeck: (deck: Deck) => void;
+  finishEditing: () => void;
 }) {
   function updateTitle(title: string) {
     if (deck) {
@@ -82,10 +84,20 @@ function DeckEditor({
             </div>
           ))
         : []}
-      <button className="btn btn-primary mt-3" onClick={addCard}>
-        <i className="bi bi-plus" />
-        Add Card
-      </button>
+      <div className="flex-row">
+        <button className="btn btn-primary mt-3" onClick={addCard}>
+          <i className="bi bi-plus" />
+          Add Card
+        </button>
+      </div>
+      <div className="flex-row justify-content-end">
+        <button
+          className="btn btn-secondary mt-3"
+          onClick={finishEditing}
+        >
+          Save changes & study
+        </button>
+      </div>
     </div>
   );
 }

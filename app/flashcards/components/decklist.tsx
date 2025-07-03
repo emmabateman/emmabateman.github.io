@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { v1 as uuidv1 } from "uuid";
 
 import { Card } from "./deckviewer";
@@ -26,19 +27,24 @@ function DeckList({
   setActiveDeck: (number) => void;
   setMode: (mode: "study" | "edit") => void;
 }) {
+  const [cookies, _] = useCookies(["decks"]);
+
   const [deletingDeck, setDeletingDeck] = useState<Deck>(undefined);
 
   function loadDecks() {
-    const newDecks = [];
+    if (cookies["decks"]) {
+      setDecks(cookies["decks"]);
+    } else {
+      //load default decks
+      const newDecks = [];
+      newDecks.push({
+        uuid: uuidv1(),
+        title: "Top 50 Spanish Words",
+        cards: spanish_vocab,
+      });
 
-    //load default decks
-    newDecks.push({
-      uuid: uuidv1(),
-      title: "Top 50 Spanish Words",
-      cards: spanish_vocab,
-    });
-
-    setDecks(newDecks);
+      setDecks(newDecks);
+    }
   }
 
   function createNewDeck() {
@@ -132,8 +138,15 @@ function DeckList({
             </div>
           </li>
         ))}
-        <li className={`card btn btn-outline-primary ${styles.deck}`} onClick={createNewDeck} key="new">
-          <h4 className="m-3"><i className="bi bi-plus"/>New</h4>
+        <li
+          className={`card btn btn-outline-primary ${styles.deck}`}
+          onClick={createNewDeck}
+          key="new"
+        >
+          <h4 className="m-3">
+            <i className="bi bi-plus" />
+            New
+          </h4>
         </li>
       </ul>
     </div>

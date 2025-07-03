@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 import { DeckList, Deck } from "./components/decklist";
 import { DeckViewer } from "./components/deckviewer";
@@ -9,9 +10,15 @@ import { DeckEditor } from "./components/deckeditor";
 import { Footer } from "../../components/footer";
 
 export default function Page() {
+  const [cookies, setCookie] = useCookies(["decks"]);
+
   const [decks, setDecks] = useState<Deck[]>([]);
   const [activeDeck, setActiveDeck] = useState<Deck>(undefined);
   const [mode, setMode] = useState<"study" | "edit">("study");
+
+  useEffect(() => {
+    setCookie("decks", decks);
+  }, [decks]);
 
   function updateActiveDeck(deck: Deck) {
     setActiveDeck(deck);
@@ -44,6 +51,9 @@ export default function Page() {
           <DeckEditor
             deck={activeDeck}
             setDeck={updateActiveDeck}
+            finishEditing={() => {
+              setMode("study");
+            }}
             key={activeDeck ? activeDeck.uuid : ""}
           />
         </div>
