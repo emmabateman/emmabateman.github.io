@@ -1,13 +1,11 @@
-import {Config} from "./config"
-
 function Controls({
-  config,
+  size,
   numberPress,
   inputMode,
   toggleInputMode,
   undo,
 }: {
-  config: Config;
+  size: number;
   numberPress: (n: number) => void;
   inputMode: "final" | "possible";
   toggleInputMode: () => void;
@@ -25,7 +23,7 @@ function Controls({
       >
         <i className="bi bi-arrow-left-right"></i>
       </button>
-      {[...new Array(config.size).keys()].map((n) => (
+      {[...new Array(size).keys()].map((n) => (
         <button
           className={`btn btn-lg m-1 ${
             inputMode == "final" ? "btn-primary" : "btn-outline-primary"

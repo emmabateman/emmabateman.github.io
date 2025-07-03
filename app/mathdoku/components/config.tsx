@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 interface Config {
-  size: number;
   autoComplete: boolean;
 }
 
@@ -27,7 +26,6 @@ function ConfigEditor({
   function toggleAutoComplete() {
     setInputDisabled(true);
     const newConfig = {
-      size: config.size,
       autoComplete: config.autoComplete,
     };
     newConfig.autoComplete = !config.autoComplete;

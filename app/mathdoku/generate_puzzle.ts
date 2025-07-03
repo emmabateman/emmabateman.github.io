@@ -6,11 +6,11 @@ const maxClueSize = 4;
 interface Clue {
   indices: [number, number][];
   operation?: "+" | "-" | "/" | "*";
-
   value: number;
 }
 
 interface Puzzle {
+  size: number;
   solution: number[][];
   clues: Clue[];
 }
@@ -172,7 +172,7 @@ function generateClues(size: number, solution: number[][]): Clue[] {
 }
 
 function generatePuzzle(size: number): Puzzle {
-  const puzzle: Puzzle = { solution: generateSolution(size), clues: [] };
+  const puzzle: Puzzle = { size: size, solution: generateSolution(size), clues: [] };
   puzzle.clues = generateClues(size, puzzle.solution);
   return puzzle;
 }

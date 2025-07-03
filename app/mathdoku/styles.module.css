@@ -5,11 +5,21 @@
   height: 100%;
   container-type: size;
   border-color: red;
+  line-height: 1;
+}
+
+.clueText {
+  height: 25%;
+  font-size: 25cqh;
+}
+
+.valueText {
+  height: 75%;
+  font-size: 60cqh;
 }
 
 .possibleValuesGrid {
-  width: 100%;
-  height: 100%;
+  height: 75%;
   display: flex;
   justify-content: flex-end;
 }
@@ -21,8 +31,8 @@
 
 .possibleValue {
   width: 33%;
-  height: 10px;
-  font-size: 10px;
+  height: 33%;
+  font-size: 20cqh;
   color: gray;
 }
 
@@ -43,6 +53,7 @@
   border-color: white;
   width: 100%;
   height: 100%;
+  container-type: inline-size;
 }
 
 .highlight.active {
