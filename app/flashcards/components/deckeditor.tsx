@@ -2,8 +2,9 @@
 
 import { Deck } from "./decklist";
 
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, ContentState } from "draft-js";
+// TODO: implement rich text editor
+//import { Editor } from "react-draft-wysiwyg";
+//import { EditorState, ContentState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function DeckEditor({
